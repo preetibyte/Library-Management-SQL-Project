@@ -2,8 +2,8 @@
 
 ## Project Overview
 
-**Project Title**: Library Management Project
-**Level**: Intermediate
+**Project Title**: Library Management Project  
+**Level**: Intermediate  
 **Database**: `library_management_project_db`
 
 **Project Title**: Library Management Project
