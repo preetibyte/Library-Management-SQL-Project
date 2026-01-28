@@ -6,7 +6,7 @@
 **Level**: Intermediate  
 **Database**: `library_management_project_db`
 
-**Project Title**: Library Management Project  
+**Project Title**: Library Management Project\
 **Level**: Intermediate
 ## Obejectives
 
