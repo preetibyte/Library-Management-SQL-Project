@@ -6,8 +6,6 @@
 **Level**: Intermediate  
 **Database**: `library_management_project_db`
 
-**Project Title**: Library Management Project\
-**Level**: Intermediate
 ## Obejectives
 
 1. **Set up the Library Management System Database**: Create and populate the database with tables for branches, employees, members, books, issued status, and return status.
