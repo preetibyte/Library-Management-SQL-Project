@@ -17,4 +17,7 @@
 
 ### 1. Database Setup
 
+<img width="936" height="593" alt="ER Diagram" src="https://github.com/user-attachments/assets/c03cbdd3-a283-439c-bfb5-90c9c7d498a8" />
+
+
 
