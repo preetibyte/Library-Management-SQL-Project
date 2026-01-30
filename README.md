@@ -144,3 +144,45 @@ WHERE issued_id = "IS121";
 DELETE FROM issued_status
 WHERE issued_id = "IS121";
 ```
+
+**Task 4: Retrieve All Books Issued by a Specific Employee**
+-- Objective: Select all books issued by the employee with emp_id = 'E101'.
+```sql
+SELECT * from issued_status
+WHERE issued_emp_id = 'E101';
+```
+
+**Task 5: List Members Who Have Issued More Than One Book**
+-- Objective: Use GROUP BY to find members who have issued more than one book.
+
+```sql
+SELECT 
+	issued_member_id
+    -- COUNT(issued_id) as total_book_issued
+FROM issued_status
+GROUP BY 1
+HAVING COUNT(issued_id) > 1;
+```
+
+### 3. CTAS (Create Table As Select)
+
+**Task 6: Create Summary Tables**: Used CTAS to generate new tables based on query results - each book and total book_issued_cnt.
+
+```sql
+CREATE TABLE book_count
+AS 
+SELECT 
+	b.isbn, b.book_title, COUNT(ist.issued_id) AS issued_count 
+FROM books AS b
+JOIN issued_status AS ist
+	ON ist.issued_book_isbn = b.isbn
+GROUP BY 1,2;
+
+### 4. Data Analysis & Findings
+
+The following SQL queries were used to address specific questions:
+
+**Task 7. Retrieve All Books in a Specific Category**:
+
+```sql
+
