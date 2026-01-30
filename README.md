@@ -190,3 +190,143 @@ SELECT
 	book_title, category
 FROM books
 WHERE category ='Fantasy';
+```
+
+**Task 8: Find Total Rental Income by Category**:
+
+```sql
+SELECT 
+	b.category, SUM(b.rental_price), COUNT(*) AS count_rental_price
+FROM books AS b
+JOIN issued_status AS ist
+ON b.isbn = ist.issued_book_isbn
+GROUP BY 1;
+```
+
+**Task 9: List Members Who Registered in the Last 180 Days**
+-- members table don't have record of registered within 180 days. first insert some record which give appropriate instead of null values.
+```sql
+INSERT INTO members(member_id, member_name, member_address, reg_date)
+VALUES
+('C120', 'francis', '156 Bigul St', '2026-05-05'),
+('C121', 'Maduro', '196 Begum St', '2025-12-02');
+
+SELECT * FROM members
+WHERE reg_date >= DATE_SUB(CURDATE(), INTERVAL 180 DAY);
+```
+
+**Task 10. List Employees with Their Branch Manager's Name and their branch details**:
+```sql
+SELECT 
+	e1.*,
+    b.manager_id,
+    b.branch_address,
+    e2.emp_name AS manager_name
+FROM employees as e1
+JOIN branch AS b 
+ON e1.branch_id = b.branch_id
+JOIN employees AS e2
+ON b.manager_id = e2.emp_id;
+```
+
+**Task 11. Create a Table of Books with Rental Price Above a Certain Threshold 7USD**:
+```sql
+CREATE TABLE expensive_books
+AS
+SELECT * FROM books
+WHERE rental_price > 7;
+```
+
+**Task 12: Retrieve the List of Books Not Yet Returned**
+```sql
+SELECT 
+	issued_book_name
+FROM issued_status AS ist
+LEFT JOIN return_status AS rs
+ON ist.issued_id = rs.issued_id
+WHERE return_id IS NULL;
+```
+
+**Task 13: Identify Members with Overdue Books**  
+-- Write a query to identify members who have overdue books (assume a 30-day return period from 30 april 2024). 
+Display the member's_id, member's name, book title, issue date, and days overdue.
+```sql
+-- members == issued_status == return_status
+-- filter out the return book
+-- overdue > 30
+SELECT 
+	m.member_id, 
+	m.member_name, 
+    ist.issued_book_name,
+    ist.issued_date, 
+    -- rs.return_date,
+    DATEDIFF('2024-04-30', ist.issued_date) AS overdue_days
+FROM members AS m
+JOIN issued_status AS ist
+ON m.member_id = ist.issued_member_id
+LEFT JOIN return_status AS rs
+ON rs.issued_id = ist.issued_id
+WHERE rs.return_date IS NULL
+AND DATEDIFF('2024-04-30', ist.issued_date) > 30
+ORDER BY 1;
+```
+
+**Task 14: Branch Performance Report**
+-- Create a query that generates a performance report for each branch, showing the number of books issued, 
+the number of books returned, and the total revenue generated from book rentals.
+```sql
+CREATE TABLE banch_report
+AS
+SELECT 
+	br.branch_id,
+    br.manager_id,
+    COUNT(ist.issued_id) AS Issued_book_number,
+    COUNT(rs.return_id) AS Return_book_number,
+    SUM(b.rental_price) AS Total_revenue
+FROM branch AS br
+JOIN employees AS e
+ON br.branch_id = e.branch_id
+JOIN issued_status AS ist
+ON ist.issued_emp_id = e.emp_id
+LEFT JOIN return_status AS rs
+ON ist.issued_id = rs.issued_id
+JOIN books AS b
+ON ist.issued_book_isbn = b.isbn 
+GROUP BY 1
+Order BY 1;
+```
+
+**Task 15: CTAS: Create a Table of Active Members**  
+-- Use the CREATE TABLE AS (CTAS) statement to create a new table active_members containing members who have issued
+ at least one book in the last 2 months.
+```sql
+CREATE TABLE active_members
+AS
+SELECT * FROM members
+WHERE member_id IN (
+						SELECT 
+							DISTINCT issued_member_id
+						FROM issued_status
+						WHERE DATEDIFF('2024-05-30', issued_date) < 60
+					);
+```
+
+**Task 16: Find Employees with the Most Book Issues Processed**
+Write a query to find the top 3 employees who have processed the most book issues. Display the employee name, 
+number of books processed, and their branch.
+```sql
+SELECT 
+	e.emp_id,
+	e.emp_name,
+    COUNT(ist.issued_id) AS books_processed,
+    b.branch_id,
+    b.branch_address
+FROM employees AS e
+JOIN issued_status AS ist
+ON e.emp_id = ist.issued_emp_id
+JOIN branch AS b
+ON e.branch_id = b.branch_id
+GROUP BY 1,4,5
+ORDER BY 3 DESC
+LIMIT 3;
+```
