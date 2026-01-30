@@ -136,7 +136,7 @@ select * from members;
 ```
 
 **Task 3: Delete a Record from the Issued Status Table**
--- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
+-- Delete the record with issued_id = 'IS121' from the issued_status table.
 ```sql
 SELECT * FROM issued_status
 WHERE issued_id = "IS121";
@@ -146,14 +146,14 @@ WHERE issued_id = "IS121";
 ```
 
 **Task 4: Retrieve All Books Issued by a Specific Employee**
--- Objective: Select all books issued by the employee with emp_id = 'E101'.
+--  Select all books issued by the employee with emp_id = 'E101'.
 ```sql
 SELECT * from issued_status
 WHERE issued_emp_id = 'E101';
 ```
 
 **Task 5: List Members Who Have Issued More Than One Book**
--- Objective: Use GROUP BY to find members who have issued more than one book.
+-- Use GROUP BY to find members who have issued more than one book.
 
 ```sql
 SELECT 
@@ -177,6 +177,7 @@ FROM books AS b
 JOIN issued_status AS ist
 	ON ist.issued_book_isbn = b.isbn
 GROUP BY 1,2;
+```
 
 ### 4. Data Analysis & Findings
 
@@ -185,4 +186,7 @@ The following SQL queries were used to address specific questions:
 **Task 7. Retrieve All Books in a Specific Category**:
 
 ```sql
-
+SELECT 
+	book_title, category
+FROM books
+WHERE category ='Fantasy';
