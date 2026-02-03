@@ -1,4 +1,4 @@
-```sql
+
 INSERT INTO members(member_id, member_name, member_address, reg_date) 
 VALUES
 ('C101', 'Alice Johnson', '123 Main St', '2021-05-15'),
@@ -146,4 +146,4 @@ VALUES
 ('RS117', 'IS119', '2024-05-27'),
 ('RS118', 'IS120', '2024-05-29');
 SELECT * FROM issued_status;
-```
+
