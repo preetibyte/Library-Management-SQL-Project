@@ -248,7 +248,7 @@ WHERE return_id IS NULL;
 ```
 
 **Task 13: Identify Members with Overdue Books**  
--- Write a query to identify members who have overdue books (assume a 30-day return period from 30 april 2024). 
+Write a query to identify members who have overdue books (assume a 30-day return period from 30 april 2024). 
 Display the member's_id, member's name, book title, issue date, and days overdue.
 ```sql
 -- members == issued_status == return_status
@@ -271,8 +271,8 @@ AND DATEDIFF('2024-04-30', ist.issued_date) > 30
 ORDER BY 1;
 ```
 
-**Task 14: Branch Performance Report**
--- Create a query that generates a performance report for each branch, showing the number of books issued, 
+**Task 14: Branch Performance Report**  
+Create a query that generates a performance report for each branch, showing the number of books issued, 
 the number of books returned, and the total revenue generated from book rentals.
 ```sql
 CREATE TABLE banch_report
@@ -297,7 +297,7 @@ Order BY 1;
 ```
 
 **Task 15: CTAS: Create a Table of Active Members**  
--- Use the CREATE TABLE AS (CTAS) statement to create a new table active_members containing members who have issued
+Use the CREATE TABLE AS (CTAS) statement to create a new table active_members containing members who have issued
  at least one book in the last 2 months.
 ```sql
 CREATE TABLE active_members
@@ -311,7 +311,7 @@ WHERE member_id IN (
 					);
 ```
 
-**Task 16: Find Employees with the Most Book Issues Processed**
+**Task 16: Find Employees with the Most Book Issues Processed**  
 Write a query to find the top 3 employees who have processed the most book issues. Display the employee name, 
 number of books processed, and their branch.
 ```sql
